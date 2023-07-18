@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 import cors from 'cors'
 import authRouter from './routes/auth'
+import sequelize from './configs/sequelize'
 
 const app = express()
 
@@ -23,6 +24,8 @@ app.use(function (req, res, next) {
 
 const port = process.env.PORT || 8000
 
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`)
+sequelize.sync().then(() => {
+  app.listen(port, () => {
+    console.log(`⚡️[server]: Server is running at http://localhost:${port}`)
+  })
 })
