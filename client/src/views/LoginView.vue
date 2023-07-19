@@ -6,9 +6,9 @@ const email = ref<string>("");
 const password = ref<string>("");
 const error = ref<string>("");
 
-const register = async () => {
+const login = async () => {
   try {
-    await AuthenticationService.register({
+    await AuthenticationService.login({
       email: email.value,
       password: password.value,
     });
@@ -21,7 +21,7 @@ const register = async () => {
 
 <template>
   <div class="container">
-    <div class="title">Register</div>
+    <div class="title">Login</div>
     <form name="tab-tracker-form" autocomplete="off" class="form">
       <v-text-field variant="underlined" label="Email" v-model="email"></v-text-field>
       <br />
@@ -35,7 +35,7 @@ const register = async () => {
       <br />
       <div class="danger-alert" v-html="error" />
       <br />
-      <v-btn class="submit-btn" @click="register">Register</v-btn>
+      <v-btn class="submit-btn" @click="login">Login</v-btn>
     </form>
   </div>
 </template>
