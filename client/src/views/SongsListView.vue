@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 import { RouterLink } from "vue-router";
 import SongService from "@/services/SongService";
 
-interface ISong {
+export interface ISong {
   id: number;
   title: string;
   artist: string;

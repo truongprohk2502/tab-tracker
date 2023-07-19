@@ -4,6 +4,7 @@ import RegisterView from "../views/RegisterView.vue";
 import LoginView from "../views/LoginView.vue";
 import CreateSongView from "../views/CreateSongView.vue";
 import SongsListView from "../views/SongsListView.vue";
+import SongDetailsView from "../views/SongDetails/Index.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: "/songs",
       name: "songs",
       component: SongsListView,
+    },
+    {
+      path: "/songs/:songId",
+      name: "song-details",
+      component: SongDetailsView,
     },
   ],
 });

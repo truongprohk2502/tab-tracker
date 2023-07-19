@@ -2,6 +2,8 @@ import axiosApi from "./Api";
 
 const getAllSongs = () => axiosApi.get("songs");
 
+const getSongById = (id: string) => axiosApi.get(`songs/${id}`);
+
 interface ICreateSongBody {
   title: string;
   artist: string;
@@ -15,4 +17,4 @@ interface ICreateSongBody {
 
 const postCreateSong = (data: ICreateSongBody) => axiosApi.post("songs", data);
 
-export default { getAllSongs, postCreateSong };
+export default { getAllSongs, getSongById, postCreateSong };

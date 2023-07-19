@@ -9,6 +9,11 @@ router.get('/', async function (req, res) {
   res.send(songs)
 })
 
+router.get('/:songId', async function (req, res) {
+  const song = await Song.findByPk(req.params.songId)
+  res.send(song)
+})
+
 interface ICreateSongBody {
   title: string
   artist: string

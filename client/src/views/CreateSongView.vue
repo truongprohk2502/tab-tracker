@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import SongService from "@/services/SongService";
+
+const router = useRouter();
 
 const title = ref<string>("");
 const artist = ref<string>("");
@@ -30,7 +33,7 @@ const create = async () => {
 
   error.value = "";
   try {
-    const res = await SongService.postCreateSong({
+    await SongService.postCreateSong({
       title: title.value,
       artist: artist.value,
       genre: genre.value,
@@ -40,7 +43,7 @@ const create = async () => {
       lyrics: lyrics.value,
       tab: tab.value,
     });
-    console.log(res.data);
+    router.push("/songs");
   } catch (err) {
     console.error(err);
   }
