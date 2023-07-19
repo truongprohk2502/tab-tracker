@@ -10,7 +10,10 @@ const { logout } = authStore;
 
 <template>
   <header class="container">
-    <RouterLink to="/" class="home-link">Tab Tracker</RouterLink>
+    <div class="links">
+      <RouterLink to="/" class="home-link">Tab Tracker</RouterLink>
+      <RouterLink to="/songs" class="link">Browse</RouterLink>
+    </div>
     <div class="links" v-if="!isUserLoggedIn">
       <RouterLink to="/login" class="link">LOGIN</RouterLink>
       <RouterLink to="/register" class="link">SIGN UP</RouterLink>
@@ -36,9 +39,12 @@ const { logout } = authStore;
 .home-link {
   color: white;
   text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
 }
 .links {
   display: flex;
+  align-items: center;
 }
 .link {
   color: white;

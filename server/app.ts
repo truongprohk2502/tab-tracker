@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 import cors from 'cors'
 import authRouter from './routes/auth'
+import songsRouter from './routes/songs'
 import sequelize from './configs/sequelize'
 
 const app = express()
@@ -17,6 +18,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/auth', authRouter)
+app.use('/songs', songsRouter)
 
 app.use(function (req, res, next) {
   next(createError(404))
