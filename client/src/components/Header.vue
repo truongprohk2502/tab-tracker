@@ -1,19 +1,27 @@
 <script setup lang="ts">
+import useAuthStore from "@/stores/AuthStore";
+import { storeToRefs } from "pinia";
 import { RouterLink } from "vue-router";
+
+const authStore = useAuthStore();
+const { isUserLoggedIn } = storeToRefs(authStore);
+const { logout } = authStore;
 </script>
 
 <template>
   <header class="container">
     <RouterLink to="/" class="home-link">Tab Tracker</RouterLink>
-    <div class="links">
+    <div class="links" v-if="!isUserLoggedIn">
       <RouterLink to="/login" class="link">LOGIN</RouterLink>
       <RouterLink to="/register" class="link">SIGN UP</RouterLink>
     </div>
+    <v-btn v-else @click="logout" size="small">Logout</v-btn>
   </header>
 </template>
 
 <style scoped>
 .container {
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;

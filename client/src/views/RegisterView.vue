@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import AuthenticationService from "@/services/AuthenticationService";
 import { ref } from "vue";
+import AuthenticationService from "@/services/AuthenticationService";
+import useAuthStore from "@/stores/AuthStore";
+
+const authStore = useAuthStore();
 
 const email = ref<string>("");
 const password = ref<string>("");
@@ -8,10 +11,12 @@ const error = ref<string>("");
 
 const register = async () => {
   try {
-    await AuthenticationService.register({
+    const res = await AuthenticationService.register({
       email: email.value,
       password: password.value,
     });
+    authStore.setToken(res.data.token);
+    authStore.setUser(res.data.user);
     error.value = "";
   } catch (err: any) {
     error.value = err.response.data.error;
@@ -57,5 +62,9 @@ const register = async () => {
 }
 .submit-btn {
   margin: auto;
+}
+.danger-alert {
+  font-size: 14px;
+  color: red;
 }
 </style>

@@ -1,6 +1,8 @@
 import express, { type Request, type Response } from 'express'
+import bcrypt from 'bcrypt'
 import User from '../models/User'
 import { RegisterPolicy } from '../policies/AuthPolicy'
+import { jwtSignUser } from '../configs/jwt'
 
 const router = express.Router()
 
@@ -14,8 +16,10 @@ router.post(
   RegisterPolicy,
   async function (req: Omit<Request, 'body'> & { body: IRegisterBody }, res: Response) {
     try {
-      const user = await User.create(req.body)
-      res.send(user.toJSON())
+      const { email, password } = req.body
+      const hashPass = await bcrypt.hash(password, 10)
+      const user = await User.create({ email, password: hashPass })
+      res.send({ user: user.toJSON(), token: jwtSignUser({ email }) })
     } catch (err) {
       res.status(400).send({ error: 'This email is already in use' })
     }
@@ -36,10 +40,11 @@ router.post(
       if (!user) {
         return res.status(403).send({ message: 'The login information was incorrect' })
       }
-      if (user.password !== password) {
+      const isValidPassword = await bcrypt.compare(password, user.password)
+      if (!isValidPassword) {
         return res.status(403).send({ message: 'The login information was incorrect' })
       }
-      res.send({ user: user.toJSON() })
+      res.send({ user: user.toJSON(), token: jwtSignUser({ email }) })
     } catch (err) {
       res.status(400).send({ error: 'This email is already in use' })
     }
